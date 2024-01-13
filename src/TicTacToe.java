@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 class TicTacToe {
-
     private static final String PLAYER_1_SYMBOL = "X";
     private static final String PLAYER_2_SYMBOL = "O";
     private static final String[] ROWS = new String[]{"A", "B", "C"};
@@ -21,8 +20,7 @@ class TicTacToe {
     public void play(String cell) throws AlreadyPlayedCellException, UnknownCellException, GameAlreadyFinishedException {
         checkGamePlayability();
         checkCellPlayability(cell);
-
-        cells.put(cell, isPlayer1Turn ? PLAYER_1_SYMBOL : PLAYER_2_SYMBOL);
+        markCellAsPlayedBy(getCurrentTurnPlayer(), cell);
         isPlayer1Turn = !isPlayer1Turn;
     }
 
@@ -37,6 +35,8 @@ class TicTacToe {
 
     public boolean isPlayerWinner(String player) {
         try {
+            if (hasPlayerAlignedTheLeftToRightDiagonal(player)) return true;
+            if (hasPlayerAlignedTheRightToLeftDiagonal(player)) return true;
             for (String row : ROWS)
                 if (hasPlayerAlignedTheRow(row, player)) return true;
             for (String column : COLUMNS)
@@ -51,6 +51,10 @@ class TicTacToe {
     public String getCurrentTurnPlayer() throws GameAlreadyFinishedException {
         if (isTheGameIsFinished()) throw new GameAlreadyFinishedException();
         return isPlayer1Turn ? PLAYER_1_SYMBOL : PLAYER_2_SYMBOL;
+    }
+
+    private void markCellAsPlayedBy(String player, String cell) {
+        cells.put(cell, player);
     }
 
     private void checkGamePlayability() throws GameAlreadyFinishedException {
@@ -92,6 +96,18 @@ class TicTacToe {
     private boolean hasPlayerAlignedTheRow(String row, String player) throws UnknownCellException {
         for (String column : COLUMNS)
             if (!player.equals(getCellPlayer(row + column))) return false;
+        return true;
+    }
+
+    private boolean hasPlayerAlignedTheRightToLeftDiagonal(String player) throws UnknownCellException {
+        for (int i = 0; i < ROWS.length; i++)
+            if (!player.equals(getCellPlayer(ROWS[i] + COLUMNS[ROWS.length - 1 - i]))) return false;
+        return true;
+    }
+
+    private boolean hasPlayerAlignedTheLeftToRightDiagonal(String player) throws UnknownCellException {
+        for (int i = 0; i < ROWS.length; i++)
+            if (!player.equals(getCellPlayer(ROWS[i] + COLUMNS[i]))) return false;
         return true;
     }
 }

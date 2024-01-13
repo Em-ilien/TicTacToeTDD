@@ -183,4 +183,27 @@ class TicTacToeTest {
         ticTacToe.play("A3");
         assertThrows(GameAlreadyFinishedException.class, () -> ticTacToe.getCurrentTurnPlayer());
     }
+
+    @Test
+    void alignTheLeftToRightDiagonalShouldEndTheGame() throws Exception {
+        ticTacToe.play("A1");
+        ticTacToe.play("B1");
+        ticTacToe.play("B2");
+        ticTacToe.play("A2");
+        ticTacToe.play("C3");
+        assertTrue(ticTacToe.isTheGameIsFinished());
+        assertTrue(ticTacToe.isPlayerWinner("X"));
+    }
+
+    @Test
+    void alignTheRightToLeftDiagonalShouldEndTheGame() throws Exception {
+        ticTacToe.play("C3");
+        ticTacToe.play("A3");
+        ticTacToe.play("B1");
+        ticTacToe.play("B2");
+        ticTacToe.play("A2");
+        ticTacToe.play("C1");
+        assertTrue(ticTacToe.isTheGameIsFinished());
+        assertTrue(ticTacToe.isPlayerWinner("O"));
+    }
 }
