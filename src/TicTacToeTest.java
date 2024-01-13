@@ -206,4 +206,20 @@ class TicTacToeTest {
         assertTrue(ticTacToe.isTheGameIsFinished());
         assertTrue(ticTacToe.isPlayerWinner("O"));
     }
+
+    @Test
+    void theGameIsFinishedMethodShouldReturnTrueWhenAllCellsArePlayedEvenIfThereIsNoWinner() throws Exception {
+        ticTacToe.play("A1");
+        ticTacToe.play("B1");
+        ticTacToe.play("A2");
+        ticTacToe.play("B2");
+        ticTacToe.play("B3");
+        ticTacToe.play("A3");
+        ticTacToe.play("C1");
+        ticTacToe.play("C2");
+        ticTacToe.play("C3");
+        assertTrue(ticTacToe.isTheGameIsFinished());
+        assertFalse(ticTacToe.isPlayerWinner("X"));
+        assertFalse(ticTacToe.isPlayerWinner("O"));
+    }
 }

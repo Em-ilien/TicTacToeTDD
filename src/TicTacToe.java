@@ -30,7 +30,8 @@ class TicTacToe {
     }
 
     public boolean isTheGameIsFinished() {
-        return isPlayerWinner(PLAYER_1_SYMBOL) || isPlayerWinner(PLAYER_2_SYMBOL);
+        if (isPlayerWinner(PLAYER_1_SYMBOL) || isPlayerWinner(PLAYER_2_SYMBOL)) return true;
+        return cells.size() == ROWS.length * COLUMNS.length;
     }
 
     public boolean isPlayerWinner(String player) {
